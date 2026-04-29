@@ -1,0 +1,2 @@
+# note_english_writing_with_AI
+AIを使った英語添削システムの例
