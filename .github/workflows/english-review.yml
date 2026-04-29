@@ -1,0 +1,48 @@
+name: English Proofreader
+
+on:
+    pull_request:
+        types: [opened, synchronize]
+
+jobs:
+    review:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            pull-requests: write
+
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: Get changed files
+              run: |
+                  git diff origin/${{ github.base_ref }}...HEAD -- '*.md' '*.txt' > diff.txt
+
+            - name: Review with Gemini
+              env:
+                  GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+                  GH_TOKEN: ${{ github.token }}
+                  PR_NUMBER: ${{ github.event.pull_request.number }}
+                  REPO: ${{ github.repository }}
+              run: |
+                  if [ ! -s diff.txt ]; then
+                    echo "No markdown/text changes found."
+                    exit 0
+                  fi
+
+                  python3 .github/scripts/build_request.py > body.json
+
+                  RESPONSE=$(curl -s \
+                    "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite-preview:generateContent?key=$GEMINI_API_KEY" \
+                    -H "Content-Type: application/json" \
+                    -d @body.json)
+
+                  COMMENT=$(echo "$RESPONSE" | python3 .github/scripts/parse_gemini.py)
+
+                  gh pr comment $PR_NUMBER \
+                    --repo $REPO \
+                    --body "## ✍️ English Review by Gemini
+
+                  $COMMENT"
