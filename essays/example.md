@@ -1,12 +1,12 @@
 # My Trip to Kyoto
 
 Last month, I went to Kyoto with my friend. It was an unforgettable trip for me because
-I had never visited there before. We took the Shinkansen from Tokyo, and it took
+I had never visited Kyoto before. We took the Shinkansen from Tokyo, and it took
 about two hours to arrive there.
 
 When we arrived, the weather was a bit cloudy, but it didn't stop us from enjoying
 the sightseeing. First, we went to Fushimi Inari Shrine. There were thousands of
-red torii gates, and I was blown away by the sight. We walked for almost two hours,
+red torii gates, and The sight took my breath away. We walked for almost two hours,
 but the view from the top was absolutely worth it.
 
 After that, we ate lunch at a small restaurant near the shrine. I ordered
